@@ -55,9 +55,13 @@ VPS-Inventory-Monitoring提供cron+http 、php think vpstest 、go 代码编译�
 点击宝塔左侧定时计划，任务类型选择URL访问，时间设置每30分钟，URL：https://你的域名/index/index/test
 
 第二种php think vpstestj：运行验证程序，间隔时间去app/index/config.php修改
+
 screen -S vpstest //创建screen
+
 cd [网站根目录]
+
 php think VpsTest
+
 CTRL A D //退出screen
 
 重新进入查看可使用
