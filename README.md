@@ -27,7 +27,7 @@ docker-compose安装命令：[code]pip install docker–compose[/code]
 
 新建好网站、添加好域名
 
-##常规部署：
+## 常规部署：
 下载：https://github.com/iiidcc/vps-inventory-monitoring/archive/refs/heads/main.zip
 
 利用宝塔面板的远程下载，把源码下载到网站根目录，之后解压把所有的文件复制到网站根目录。
