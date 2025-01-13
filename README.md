@@ -15,7 +15,7 @@
 
 - **改进版地址**：[vps-inventory-monitoring by nodeloc](https://github.com/nodeloc/vps-inventory-monitoring)  
   —— 由 **nodeloc** 大佬在 2023年12月 进行改进，感谢其为社区贡献！  
-  （**NodeLoc** 是一个提供服务器相关服务的站点，大家都知道！）
+  （百度搜索**NodeLoc** 可以看到此大佬打造的一个非常超前的交流论坛网站）
 
 ---
 
@@ -24,7 +24,8 @@
 本监控系统支持在 **宝塔面板**、**Docker** 等环境下运行，以下是安装步骤。
 
 ### 环境要求
-- **宝塔面板**、**nginx**  
+- **宝塔面板**
+- **nginx**  
 - **PHP 7.3**  
 - **MySQL 5.5**
 
@@ -36,7 +37,7 @@
    下载源码： [vps-inventory-monitoring.zip](https://github.com/iiidcc/vps-inventory-monitoring/archive/refs/heads/main.zip)
 
 2. **上传并解压**  
-   使用宝塔面板的远程下载功能，将源码文件下载到网站根目录，解压后复制到该目录。
+   创建一个新站点，将源码文件下载上传到网站根目录，并解压到根目录。
 
 3. **创建并导入数据库**  
    创建数据库并导入 `mysql.sql` 文件。
@@ -112,7 +113,7 @@
 
 2. **给脚本赋予执行权限：**  
    ```bash
-   chmod +x /www/wwwroot/vps.57hs.cn/app/index/daemon/run_php_think_VpsTest.sh
+   chmod +x /www/wwwroot/网站根目录文件夹名称/app/index/daemon/run_php_think_VpsTest.sh
    ```
 
 3. **设置宝塔计划任务**
@@ -168,7 +169,7 @@
      screen -S vpstest   # 创建 screen 会话
      cd [网站根目录]    # 切换到网站根目录
      php think VpsTest   # 运行命令
-     CTRL + A, D         # 退出 screen 会话
+     CTRL + A D         # 退出 screen 会话
      ```
      - 重新进入 `screen` 会话：
      ```bash
@@ -180,7 +181,7 @@
    - 在数据库 `xm_user` 表中找到自己注册的账号 ID，然后编辑 `app/index/config.php` 文件，设置 `adduid` 为该 ID，将新注册的账号设为管理员。
 
 6. **添加 VPS**  
-   - 访问 `http://你的域名/index/index/edit` 添加 VPS。
+   - 访问 `http://你的域名/index/index/edit` 添加 VPS。   我一般在数据库上直接添加跪求大佬们优化本项目
 
 ---
 
@@ -243,9 +244,7 @@ return true;
   更新命令行方式验证。
 
 - **2018-03-18**  
-  基于[#3](https://github.com/546669204/v
-
-ps-inventory-monitoring/issues/3)进行改进。
+  基于[#3](https://github.com/546669204/vps-inventory-monitoring/issues/3)进行改进。
 
 ---
 
