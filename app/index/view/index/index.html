@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vps库存监控</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.css" rel="stylesheet">
+
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/extensions/filter-control/bootstrap-table-filter-control.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/locale/bootstrap-table-zh-CN.min.js"></script>
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?31d44dda3445335881a01d2fc4708b7b";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+    <style>
+        .new-promotion {
+            background-color: #f0ad4e;
+            line-height: 48px;
+            font-size: 20px;
+        }
+        .btn-coupon {
+            padding: 0 6px;
+        }
+
+        #table th {
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        #table td {
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        #table .column-1 {
+            min-width: 150px;
+            font-weight: bold;
+        }
+
+        #table .column-2,
+        #table .column-3,
+        #table .column-4,
+        #table .column-5,
+        #table .column-6,
+        #table .column-8,
+        #table .column-10 {
+            min-width: 80px;
+        }
+
+        #table .column-7 {
+            min-width: 180px;
+        }
+
+        #table .column-9 {
+            min-width: 130px;
+        }
+
+        #table .column-11 {
+            min-width: 90px;
+        }
+
+        #table .column-12 {
+            display: none;
+        }
+
+        #table .badge-hot {
+            padding: 3px 6px;
+            line-height: 12px;
+            vertical-align: baseline;
+            background-color: red;
+        }
+
+</style>
+</head>
+<body style="background:url(/static/top2.jpg) no-repeat 50% -5px">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="text-center">
+                <!-- <div class="new-promotion">搬瓦工2021双十一活动，优惠码：BWH20211111，全场优惠11%，永久折扣！</div> -->
+                <!-- <div class="new-promotion">搬瓦工2021黑色星期五活动，优惠码：BWH2021BF，全场优惠10%，永久折扣！</div> -->
+                <!-- <div class="new-promotion">搬瓦工2022新年活动，优惠码：BWHNY2022，全场优惠12.22%，永久折扣！</div> -->
+                <!-- <div class="new-promotion">搬瓦工2023年最新优惠码：BWHNCXNVXV，全场优惠6.81%，永久折扣！</div> -->
+                <!-- <div class="new-promotion">搬瓦工2023年最新优惠码：BWHCCNCXVV，全场优惠6.78%，永久折扣！</div> -->
+                <div class="new-promotion">搬瓦工2025年最新优惠码：BWHCGLUKKB，全场优惠6.77%，永久折扣！</div>
+                <h1 class="inline-block">搬瓦工库存状态实时监控</h1>
+                <p><strong><a href="#" target="_blank">搬瓦工便宜套餐推荐</a> - <a href="#" target="_blank">搬瓦工新手购买教程</a> - 补货通知微信群：<a href="#" target="_blank" rel="external nofollow noopener" title="给机器人发搬瓦工自动拉群">QingDu-KK（发搬瓦工三个字自动拉群）</a></strong></p>
+                <p><strong><span style="color: red; vertical-align: middle;">搬瓦工 2025 最新优惠码：</span><button class="btn btn-warning btn-coupon" value="BWHCGLUKKB" title="点击复制优惠码" onclick="boom.cp(this)">BWHCGLUKKB(点击复制)</button><span style="vertical-align: middle;">（优惠 6.77%）🎁<a href="https://bwh88.net/aff.php?aff=69736&gid=1" target="_blank">立即使用优惠码 >></a></span></strong></p>
+                <p>备注：CPU 1核 = 1vCPU；内存 1GB = 1024MB；流量 1TB = 1000GB；硬盘 均为 SSD RAID-10</p>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+<!--<div class="row">
+        <div class="col-sm-12">
+            <div id="toolbar" class="btn-group">
+                <a class="btn btn-success btn-sm" aria-hidden="true" href="/index/index/edit"> <span
+                        class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> 添加监控</a>
+                {if condition="$islogin"}
+                <a onclick="useredit()" class="btn btn-info btn-sm" role="button"> <span
+                        class="glyphicon glyphicon-user" aria-hidden="true"></span> 个人信息</a>
+                <a onclick="loginout()" class="btn btn-warning btn-sm" role="button"> <span
+                        class="glyphicon glyphicon-log-out" aria-hidden="true"></span> 退出登录</a>
+                {else/}
+                <a onclick="useredit()" class="btn btn-info btn-sm" role="button"> <span
+                        class="glyphicon glyphicon-pencil" aria-hidden="true"></span> 注册用户</a>
+                <a onclick="loginshow()" class="btn btn-primary btn-sm" role="button"> <span
+                        class="glyphicon glyphicon-log-in" aria-hidden="true"></span> 账户登录</a>
+                {/if}
+            </div> -->
+    <div class="container-fluid">
+        <div class="row">
+            <div style="max-width:1440px; margin:auto">
+                <p></p>
+<table id="table"
+                   data-toolbar="#toolbar"
+                   data-search="true"
+                   data-show-refresh="true"
+                   data-show-toggle="false"
+                   data-show-columns="false"
+                   data-show-export="false"
+                   data-detail-view="false"
+                   data-detail-formatter="detailFormatter"
+                   data-minimum-count-columns="2"
+                   data-show-pagination-switch="false"
+                   data-pagination="false"
+                   data-id-field="id"
+                   data-page-list="[10, 25, 50, 100, ALL]"
+                   data-show-footer="false"
+                   data-side-pagination="client"
+                   data-url="{:url('index/index/getList?')}"
+                   data-filter-control="false"
+                   data-filter-show-clear="false"
+                   class="table table-striped table-condensed"
+            >
+                <thead>
+                        <tr>
+                            <th class="column-1" data-field="name">套餐</th>
+                            <th class="column-2" data-field="cpu">CPU</th>
+                            <th class="column-3" data-field="ram">内存</th>
+                            <th class="column-4" data-field="disk">硬盘</th>
+                            <th class="column-5" data-field="bandwidth">带宽</th>
+                            <th class="column-6" data-field="flow">每月流量</th>
+                            <th class="column-7" data-field="route">可选机房</th>
+                            <th class="column-8" data-field="yearly">年付价格</th>
+                            <th class="column-9" data-formatter="ceping">测速网站</th>
+                            <th class="column-10" data-formatter="stock" data-field="stock">库存状态</th>
+                            <th class="column-11" data-formatter="buy">优惠链接</th>
+                            <th class="column-12" data-formatter="buy_id">ID</th>
+                        </tr>
+                    </thead>
+                </table>
+    <div class="text-center">Power By <a href="https://vps.57hs.cn" target="_blank">搬瓦工</a> / <a href="https://vps.57hs.cn" target="_blank">搬瓦工中文网</a> / <a href="https://bwh88cn.net" target="_blank">搬瓦工官网中文版</a>
+    <by><p style="text-align:center">&copy; 2018-2024 <a href="https://vps.57hs.cn/">搬瓦工库存状态实时监控</a><i
+            class="glyphicon glyphicon-ok"></i> 保留所有权利.</by></div>
+</div>
+<div class="modal fade useredit" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">{$islogin?"用户编辑":"用户注册"}</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <input type="hidden" name="id" value="{$user.id??0}">
+                    <div class="form-group">
+                        <label for="user">帐号:</label>
+                        <input type="text" class="form-control" name="user" placeholder="用户名"
+                               value="{$user.user??''}" {$islogin?"disabled":""}>
+                    </div>
+                    <div class="form-group">
+                        <label for="pass">密码:</label>
+                        <input type="password" class="form-control" name="pass" placeholder="密码" value="">
+                    </div>
+                    <div class="form-group">
+                        <label for="ftsckey">ftsckey</label>
+                        <input type="text" class="form-control" id="ftsckey" name="ftsckey" value="{$user.ftsckey??''}">
+                        <p class="help-block">请到http://sc.ftqq.com/?c=wechat&a=bind绑定微信 然后 首页 获取 sckey</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="tgsckey">tgsckey</label>
+                        <input type="text" class="form-control" id="tgsckey" name="tgsckey" value="{$user.tgsckey??''}">
+                        <p class="help-block">https://t.me/nodeloc_bot 添加 获取 sckey</p>
+                    </div>
+                    {if condition="$iscaptcha and !isset($user.id)"}
+                    <div class="form-group">
+                        <label for="tgsckey">验证码</label>
+                        <input type="text" class="form-control" id="captcha" name="captcha" value="">
+                        <div><img src="{:captcha_src()}" alt="captcha"/></div>
+                    </div>
+                    {/if}
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-danger" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary btn-success" onclick="usersavedata()">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade login" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">用户登录</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="user">帐号:</label>
+                        <input type="text" class="form-control" name="user" placeholder="用户名">
+                    </div>
+                    <div class="form-group">
+                        <label for="pass">密码:</label>
+                        <input type="password" class="form-control" name="pass" placeholder="密码">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-danger" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary btn-success" onclick="loginpost()">登录</button>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    #table td {
+        vertical-align: middle;
+        text-align: center;
+    }
+</style>
+<script>
+    function bandwidth(value, row, index) {
+        return value + "M";
+    }
+
+    function stock(value, row, index) {
+        return value == 0 ? '<p class="btn btn-danger btn-sm">缺货</p>' : '<p class="btn btn-success btn-sm">有货</p>';
+    }
+    function buy(value, row, index) {
+            if (row.stock == 0) {
+                return "<a href='https://vps.57hs.cn/' class='btn btn-danger btn-sm' target='_blank'>补货通知</a>";
+            }
+            return "<a href='" + row.buy + "' class='btn btn-success btn-sm' target='_blank'>立即购买</a>";
+        }
+    function buy_id(value, row, index) {
+        if (row.buy != null && row.buy != "") {
+            return "<a href='buy/" + row.id + "' class='btn btn-primary btn-sm' target='_blank'>购买链接</a>";
+        }
+        return "<a class='btn btn-primary btn-sm'>暂无购链</a>";
+    }
+
+    function ceping(value, row, index) {
+        if (row.ceping != null && row.ceping != "") {
+            return "<a href='ceping/" + row.id + "' class='btn btn-info btn-sm' target='_blank'>评测or测速</a>";
+        }
+        return "<a class='btn btn-info btn-sm'>暂无</a>";
+    }
+
+    function company(value, row, index) {
+        return "<a href='company/" + row.companyid + "' target='_blank'>" + row.companyname + "</a>";
+    }
+
+    function subscribe(value, row, index) {
+        var dingstr = "{$user.subscribe??''}";
+        if (dingstr != "") {
+            var ding = dingstr.split(",");
+            if ($.inArray("" + row.id, ding) != -1) {
+                return "<span class='btn btn-success btn-sm'>已订阅</span>";
+            }
+            return "<span class='btn btn-danger btn-sm'>未订阅</span>";
+        }
+        return "<span class='btn btn-danger btn-sm'>未订阅</span>";
+    }
+
+    window.subscribeevent = {
+        'click span': function (e, value, row, index) {
+            _this = $(this);
+            $.ajax({
+                url: "/index/index/subscribe",
+                data: {id: row.id},
+                type: "POST",
+                dataType: "json",
+                success: function (re) {
+                    if (re.status == 1) {
+                        if (_this.html() == "未订阅") {
+                            _this.html("已订阅");
+                            alert("订阅成功");
+                        } else {
+                            _this.html("未订阅");
+                            alert("退订成功");
+                        }
+                        return;
+                    }
+                    alert("未知错误");
+                }
+            })
+        }
+    };
+
+    $('#table').bootstrapTable({
+        customSort: function (sortName, sortOrder) {
+            var that = this,
+                name = sortName,
+                order = sortOrder === 'desc' ? -1 : 1,
+                index = $.inArray(sortName, this.header.fields);
+            if (index !== -1) {
+                if (this.options.sortStable) {
+                    $.each(this.data, function (i, row) {
+                        if (!row.hasOwnProperty('_position')) row._position = i;
+                    });
+                }
+                var getItemField = function (item, field, escape) {
+                    var value = item;
+
+                    if (typeof field !== 'string' || item.hasOwnProperty(field)) {
+                        return escape ? escapeHTML(item[field]) : item[field];
+                    }
+                    var props = field.split('.');
+                    for (var p in props) {
+                        value = value && value[props[p]];
+                    }
+                    return escape ? escapeHTML(value) : value;
+                };
+                var calculateObjectValue = function (self, name, args, defaultValue) {
+                    var func = name;
+
+                    if (typeof name === 'string') {
+                        // support obj.func1.func2
+                        var names = name.split('.');
+
+                        if (names.length > 1) {
+                            func = window;
+                            $.each(names, function (i, f) {
+                                func = func[f];
+                            });
+                        } else {
+                            func = window[name];
+                        }
+                    }
+                    if (typeof func === 'object') {
+                        return func;
+                    }
+                    if (typeof func === 'function') {
+                        return func.apply(self, args);
+                    }
+                    if (!func && typeof name === 'string' && sprintf.apply(this, [name].concat(args))) {
+                        return sprintf.apply(this, [name].concat(args));
+                    }
+                    return defaultValue;
+                };
+                this.data.sort(function (a, b) {
+
+                    if (that.header.sortNames[index]) {
+                        name = that.header.sortNames[index];
+                    }
+                    var aa = getItemField(a, name, that.options.escape),
+                        bb = getItemField(b, name, that.options.escape),
+                        value = calculateObjectValue(that.header, that.header.sorters[index], [aa, bb]);
+
+                    if (value !== undefined) {
+                        return order * value;
+                    }
+
+                    // Fix #161: undefined or null string sort bug.
+                    if (aa === undefined || aa === null) {
+                        aa = '';
+                    }
+                    if (bb === undefined || bb === null) {
+                        bb = '';
+                    }
+
+                    if (that.options.sortStable && aa === bb) {
+                        aa = a._position;
+                        bb = b._position;
+                    }
+
+                    // IF both values are numeric, do a numeric comparison
+                    if ($.isNumeric(aa) && $.isNumeric(bb) || $.inArray(name, ["flow", "bandwidth", "disk"]) >= 0) {
+                        // Convert numerical values form string to float.
+                        aa = parseFloat(aa);
+                        bb = parseFloat(bb);
+                        if (aa < bb) {
+                            return order * -1;
+                        }
+                        return order;
+                    }
+
+                    if (aa === bb) {
+                        return 0;
+                    }
+
+                    // If value is not a string, convert to string
+                    if (typeof aa !== 'string') {
+                        aa = aa.toString();
+                    }
+
+                    if (aa.localeCompare(bb) === -1) {
+                        return order * -1;
+                    }
+
+                    return order;
+                });
+            }
+            console.log(this.data);
+            return;
+        }
+    });
+
+    function useredit() {
+        $(".useredit").modal('show');
+    }
+
+    function loginshow() {
+        $(".login").modal('show');
+    }
+
+    function loginout() {
+        $.ajax({
+            url: "/index/index/loginout",
+            success: function () {
+                window.location.reload();
+            }
+        })
+    }
+
+    function loginpost() {
+        $.ajax({
+            url: "/index/index/login",
+            data: $(".login form").serialize(),
+            type: "POST",
+            dataType: "json",
+            success: function (re) {
+                if (re.status == 1) {
+                    window.location.reload();
+                    return;
+                }
+                alert("帐号或密码错误.请重试！");
+            }
+        })
+    }
+
+    function usersavedata() {
+        $.ajax({
+            url: "/index/index/usersavedata",
+            data: $(".useredit form").serialize(),
+            type: "POST",
+            dataType: "json",
+            success: function (re) {
+                if (re.status == 0) {
+                    alert("帐号已存在,请更改其他重试.")
+                    return;
+                }
+                if (re.status == 2) {
+                    alert("验证码错误")
+                    return;
+                }
+                window.location.reload();
+            }
+        })
+
+    }
+
+    $(document).ready(function () {
+        $("#table th").each(function () {
+            if ($(this).find(".fht-cell select").length > 0) {
+                $width = $(this).width();
+                $(this).find(".fht-cell select option").eq(0).html($(this).find(".th-inner").html());
+                $(this).find(".th-inner").remove();
+                $(this).css({verticalAlign: "top", paddingTop: "8px"});
+                //$(this).find("select").width($width);
+            }
+            if ($(this).find(".fht-cell input").length > 0) {
+                $width = $(this).width();
+                $(this).find(".fht-cell input").attr("placeholder", $(this).find(".th-inner").html());
+                $(this).find(".th-inner").remove();
+                $(this).css({verticalAlign: "top", paddingTop: "8px"});
+                //$(this).find("input").width($width);
+            }
+            if ($(this).find(".fht-cell>div").length > 0 && $(this).find(".fht-cell>div").html() == "") {
+                $(this).find(".fht-cell").remove();
+            }
+        });
+    });
+</script>
+
+    <script>
+        (function (window, document) {
+            window.boom = {
+                fixed: function (e) {
+                    var el = document.getElementById(e),
+                        elTop = el.getBoundingClientRect().top - document.body.getBoundingClientRect().top;
+                    if (1200 < document.body.clientWidth) {
+                        window.addEventListener('scroll',
+                            function () {
+                                document.documentElement.scrollTop > elTop ? el.classList.add("fixed") : el.classList.remove("fixed")
+                            });
+                    }
+                },
+                cp: function (e, f) {
+                    var textArea = document.createElement("textarea");
+                    textArea.value = (e.value || f);
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    document.execCommand("Copy");
+                    textArea.remove();
+                    e.textContent = (e.value || f) + "(复制成功)";
+                    e.title = "再次点击重新复制优惠码";
+                }
+            }
+        })(this, document);
+    </script>
+</body>
+</html>
