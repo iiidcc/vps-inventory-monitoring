@@ -9,7 +9,7 @@ vps-inventory-monitoring
 原作者地址github：https://github.com/546669204/vps-inventory-monitoring  
 （最后更新于19年2月，原作者的思维还是非常超前的这个项目25年了依然能打）
 
-nodeloc大佬23年12月1日根据这个建议改进https://github.com/546669204/vps-inventory-monitoring/issues/3
+nodeloc大佬23年12月1日根据[#3](https://github.com/546669204/vps-inventory-monitoring/issues/3)进行改进
 
 改进后地址github：https://github.com/nodeloc/vps-inventory-monitoring
 
