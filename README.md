@@ -14,6 +14,8 @@ nodeloc大佬23年12月1日根据[#3](https://github.com/546669204/vps-inventory
 
 改进后地址github：https://github.com/nodeloc/vps-inventory-monitoring
 
+（ 对了这个大佬有个站点搞机的基本都知道 [NodeLoc](https://www.nodeloc.com) ）
+
 **然后就是25年1月中旬，我这个小白全网到处抄了一下用gpt修修改改弄了个搬瓦工aff监控**
 
 *****这个是我自己个人使用的，都是前人种树后人乘凉感谢各位大佬~~*****
