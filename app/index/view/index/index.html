@@ -252,7 +252,8 @@
     function stock(value, row, index) {
         return value == 0 ? '<p class="btn btn-danger btn-sm">缺货</p>' : '<p class="btn btn-success btn-sm">有货</p>';
     }
-    function buy(value, row, index) {
+    // 这里修改补货通知地址，tg或者qq群微信等等...
+	function buy(value, row, index) {
             if (row.stock == 0) {
                 return "<a href='https://vps.57hs.cn/' class='btn btn-danger btn-sm' target='_blank'>补货通知</a>";
             }
