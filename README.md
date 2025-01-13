@@ -2,8 +2,9 @@
 
 ------
 
-vps-inventory-monitoring是一个VPS库存监控系统 — 实时把握库存信息，折腾起来稍微有点费劲，但使用起来体验还是不错的，支持微信/TG频道推送。 **实时把握库存信息**   
-[Demo](https://vps.57hs.cn)
+vps-inventory-monitoring是一个VPS库存监控系统 — 实时把握库存信息，折腾起来稍微有点费劲，但使用起来体验还是不错的，支持微信/TG频道推送。 
+
+**实时把握库存信息**      [Demo](https://vps.57hs.cn)
 
 vps-inventory-monitoring
 原作者地址github：https://github.com/546669204/vps-inventory-monitoring  
@@ -13,9 +14,9 @@ nodeloc大佬23年12月1日根据[#3](https://github.com/546669204/vps-inventory
 
 改进后地址github：https://github.com/nodeloc/vps-inventory-monitoring
 
-然后就是25年1月中旬，我这个小白全网到处抄了一下用gpt修修改改弄了个搬瓦工aff监控
+**然后就是25年1月中旬，我这个小白全网到处抄了一下用gpt修修改改弄了个搬瓦工aff监控**
 
-这个是我自己个人使用的，都是前人种树后人乘凉感谢各位大佬~~
+*****这个是我自己个人使用的，都是前人种树后人乘凉感谢各位大佬~~
 
 ## 安装指南
 
