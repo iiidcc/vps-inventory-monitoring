@@ -82,7 +82,9 @@ screen -r vpstest
 其他不用修改。
 
 给这个文件一个执行权限
+
 命令行直接复制粘贴
+
 chmod +x /www/wwwroot/vps.57hs.cn/app/index/daemon/run_php_think_VpsTest.sh
 
 
