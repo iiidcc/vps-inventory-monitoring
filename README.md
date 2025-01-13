@@ -23,7 +23,7 @@ nodeloc大佬23年12月1日根据这个建议改进https://github.com/546669204/
 
 如果要使用docker安装，请安装好docker管理器和docker-compose
 
-docker-compose安装命令：[code]pip install docker–compose[/code]
+docker-compose安装命令：pip install docker–compose
 
 新建好网站、添加好域名
 
@@ -44,6 +44,7 @@ docker-compose安装命令：[code]pip install docker–compose[/code]
 
 这样已经可以打开域名访问了，但是需要自动检测vps服务商的产品更新是否有货等等，所以需要设置自动检测。
 
+## 库存监控定时检测
 VPS-Inventory-Monitoring提供cron+http 、php think vpstest 、go 代码编译运行三种运行监控的方式
 
 推荐使用最简单的方法：php think vpstest 。
